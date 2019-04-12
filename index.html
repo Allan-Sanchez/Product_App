@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- <link rel="stylesheet" href="../plugins/bootstrap_minty.min.css"> -->
-    <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+    <!-- resources in local -->
+    <link rel="stylesheet" href="../plugins/bootstrap_minty.min.css">
+    <!-- <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css"> -->
     <title>CRUD APPLICATION</title>
 </head>
 <body>
@@ -19,19 +20,23 @@
         <div id="app" class="row pt-5">
             <div class="col-md-4">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header text-center">
                         <h4>Add a Product</h4>
                     </div>
                     <form id="product-from" class="card-body">
                         <div class="form-group">
-                          <input type="text" name="name" id="name" required class="form-control" placeholder="Product name">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" required class="form-control" placeholder="Product name">
                         </div>
                         <div class="form-group">
+                            <label for="price">Price</label>
                           <input type="number" step="0.01" name="price" id="price" required min="1"  class="form-control" placeholder="Product price">
                         </div>
                         <div class="form-group">
+                            <label for="year">Year</label>
                           <input type="number" name="year" id="year" min="1980" max="2100" class="form-control" value="2019" placeholder="Product year">
                         </div>
+
                         <button type="submit" class="btn btn-primary btn-block">Add Product</button>
                     </form>
                 </div>

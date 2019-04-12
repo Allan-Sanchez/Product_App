@@ -23,6 +23,17 @@ class UI{
                 </div>
         `;
         productList.appendChild(element);
+        let products = [];
+        products.push(product);
+        
+        if (localStorage.getItem('products') === null ||localStorage.getItem('products') === '') {
+
+            localStorage.setItem('products',JSON.stringify(products));
+        }else {
+            let newProduct = JSON.parse(localStorage.getItem('products'));
+            newProduct.push(products);
+            localStorage.setItem('products',JSON.stringify(newProduct));
+        }
         this.resetForm();
         this.showMessage('product added successfully','success');
     }
@@ -50,23 +61,32 @@ class UI{
         //remove alert
         setTimeout( () => document.querySelector('.alert').remove(),3000);
     }
+    showProducts(products){
+        console.log(products);
+    }
 }
 
+if (localStorage.getItem('products') !== null || localStorage.getItem('products') !== null) {
+    let products = JSON.parse(localStorage.getItem('products'));
+    const ui = new UI();
+    ui.showProducts(products);
+    console.log('listo');
+}
 // DOM event
 document.getElementById('product-from').addEventListener('submit',(e) => {
-   e.preventDefault();
-
-   const name = document.getElementById('name').value;
-   const price = document.getElementById('price').value;
-   const year = document.getElementById('year').value;
-
-   const product = new Product(name,price,year);
-   const ui = new UI();
-   if (name === '' || price === '' || year ==='') {
-     return  ui.showMessage('product fields please','danger');
-   }
-   ui.addProduct(product);
-
+    
+    const name = document.getElementById('name').value;
+    const price = document.getElementById('price').value;
+    const year = document.getElementById('year').value;
+    
+    const product = new Product(name,price,year);
+    const ui = new UI();
+    if (name === '' || price === '' || year ==='') {
+        return  ui.showMessage('product fields please','danger');
+    }
+    ui.addProduct(product);
+    
+    e.preventDefault();
 });
 
 //DELETE event
