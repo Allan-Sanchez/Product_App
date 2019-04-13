@@ -16,7 +16,7 @@ class UI{
         element.innerHTML = `
                 <div class="card-header">Product</div>
                 <div class="card-body">
-                    <span class="m-5"><strong>Name: </strong>${product.name}</span>
+                    <span class="m-5" name="${product.name}"><strong>Name: </strong>${product.name}</span>
                     <span class="m-5"><strong>Price: </strong>${product.price}</span>
                     <span class="m-5"><strong>Year: </strong>${product.year}</span>
                     <button class="btn btn-danger btn-sm" name="delete">Delete</button>
@@ -45,10 +45,21 @@ class UI{
 
     deleteProduct(element){
         if (element.name === "delete") {
-            element.parentElement.parentElement.remove();
-            this.showMessage('product deleted successfully','info');
+            let name = (element.parentElement.children[0].textContent).substring(6);
+            let products = JSON.parse(localStorage.getItem('products'));
+
+                products.forEach((item,key) => {
+                    // console.log(`item ${item.name} - key ${key}`); 
+                    if (item.name == name) {
+                        console.log(`soy igual a ${item.name} = ${name} y mi key ${key}`);
+                        element.parentElement.parentElement.remove();
+                        this.showMessage('product deleted successfully','info');
+                        products.splice(key,1);
+                    }
+                });
+            localStorage.setItem('products',JSON.stringify(products));
         }
-    }
+    }   
     showMessage(message, type){
         const div = document.createElement('div');
         div.classList = `alert alert-${type} mt-4`;
@@ -71,7 +82,7 @@ class UI{
                newDiv.innerHTML = `
                                 <div class="card-header">Product</div>
                                 <div class="card-body">
-                                    <span class="m-5"><strong>Name: </strong>${item.name}</span>
+                                    <span class="m-5" name="${item.name}"><strong>Name: </strong>${item.name}</span>
                                     <span class="m-5"><strong>Price: </strong>${item.price}</span>
                                     <span class="m-5"><strong>Year: </strong>${item.year}</span>
                                     <button class="btn btn-danger btn-sm" name="delete">Delete</button>
