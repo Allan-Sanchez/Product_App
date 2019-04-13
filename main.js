@@ -24,15 +24,16 @@ class UI{
         `;
         productList.appendChild(element);
         let products = [];
-        products.push(product);
+        products.push(product);  
         
         if (localStorage.getItem('products') === null ||localStorage.getItem('products') === '') {
-
             localStorage.setItem('products',JSON.stringify(products));
         }else {
             let newProduct = JSON.parse(localStorage.getItem('products'));
-            newProduct.push(products);
-            localStorage.setItem('products',JSON.stringify(newProduct));
+            newProduct.forEach(plus => {
+                products.push(plus); 
+            });
+            localStorage.setItem('products',JSON.stringify(products));
         }
         this.resetForm();
         this.showMessage('product added successfully','success');
@@ -62,16 +63,37 @@ class UI{
         setTimeout( () => document.querySelector('.alert').remove(),3000);
     }
     showProducts(products){
-        console.log(products);
+       const list = document.getElementById('product-list');
+            
+           for (const item of products) {
+            let newDiv = document.createElement('div');
+               newDiv.classList = 'card text-center mb-4';
+               newDiv.innerHTML = `
+                                <div class="card-header">Product</div>
+                                <div class="card-body">
+                                    <span class="m-5"><strong>Name: </strong>${item.name}</span>
+                                    <span class="m-5"><strong>Price: </strong>${item.price}</span>
+                                    <span class="m-5"><strong>Year: </strong>${item.year}</span>
+                                    <button class="btn btn-danger btn-sm" name="delete">Delete</button>
+                                </div>
+                                `;
+            list.appendChild(newDiv);
+        }
+
     }
 }
 
-if (localStorage.getItem('products') !== null || localStorage.getItem('products') !== null) {
-    let products = JSON.parse(localStorage.getItem('products'));
-    const ui = new UI();
-    ui.showProducts(products);
-    console.log('listo');
-}
+//
+// window.onload = function () {  };
+document.addEventListener('DOMContentLoaded',(e) => {
+  
+    if (localStorage.getItem('products') !== null || localStorage.getItem('products') !== '') {
+        let products = JSON.parse(localStorage.getItem('products'));
+        const ui = new UI();
+        ui.showProducts(products);
+    }
+});
+
 // DOM event
 document.getElementById('product-from').addEventListener('submit',(e) => {
     
